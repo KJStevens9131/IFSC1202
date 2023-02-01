@@ -1,0 +1,5 @@
+classA = input("Enter Classroom A: ")
+classB = input("Enter Classroom B: ")
+classC = input("Enter Classroom C: ")
+desks = (int(classA)//2 + int(classB)//2 + int(classC)//2 + int(classA)%2 + int(classB)%2 + int(classC)%2)
+print (desks)
