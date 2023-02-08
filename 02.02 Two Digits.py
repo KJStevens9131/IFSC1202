@@ -1,0 +1,5 @@
+num = input("Enter A Number: ")
+firstdig = (int(num)//10)
+lastdig = (int(num)%10)
+print("Ones Digit: {}".format(lastdig))
+print("Tens Digit: {}".format(firstdig))
