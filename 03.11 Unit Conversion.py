@@ -61,5 +61,15 @@ elif fromunit == "mi" and tounit == "yd":
     print(num, "mi", "=>", fin2, "yd")
 
 
+elif fromunit == "in" and tounit == "in":
+    print(num, "in", "=>", num, "in")
+elif fromunit == "yd" and tounit == "yd":
+    print(num, "yd", "=>", num, "yd")
+elif fromunit == "ft" and tounit == "ft":
+    print(num, "ft", "=>", num, "ft")
+elif fromunit == "mi" and tounit == "mi":
+    print(num, "mi", "=>", num, "mi")
+
+
 else:
     print("The From Unit or To Unit is not valid")
