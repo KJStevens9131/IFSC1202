@@ -9,20 +9,16 @@ def area(radius):
 
 def main():
     file1 = open("06.01 Radius.txt","r")
-    #lst = []
-
+    a = []
     while True:
         line = file1.readline()
         if not line:
             break
         else:
-            lst.append(float(line))
+            a.append(float(line))
 
     print("{:>15} {:>15} {:>15} {:>15}".format("Radius","Diameter","Circumference","Area"))
-    for radius in lst:
+    for radius in a:
         print("{:>15.5f} {:>15.5f} {:>15.5f} {:>15.5f}".format(radius,diameter(radius),circumference(radius),area(radius)))
 
-
-
-if __name__ == "__main__":
-    main()
+main()

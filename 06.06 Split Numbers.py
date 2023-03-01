@@ -1,3 +1,13 @@
+num2 = 0
+odd = 0
+even = 0
+prime = 0
+ 
+inputFile = open("06.06 Numbers.txt","r")
+evenFile = open("06.06 Evennumbers.txt","w+")
+oddFile = open("06.06 Oddnumbers.txt","w+")
+primeFile = open("06.06 Primenumbers.txt","w+")
+
 def isEven(num):
     return num % 2 == 0   
 def isOdd(num):
@@ -15,40 +25,29 @@ def isPrime(num):
                 break
 
     return (not prim)
- 
-inputFile = open("06.06 Numbers.txt","r")
-
-evenNumbersFile = open("06.06 Evennumbers.txt","w+")
-oddNumbersFile = open("06.06 Oddnumbers.txt","w+")
-primeNumbersFiles = open("06.06 Primenumbers.txt","w+")
-
-numCount = 0;
-oddCount = 0;
-evenCount = 0;
-primeCount = 0;
 
 for line in inputFile:
     line = int(line.strip())
-    numCount += 1
+    num2 += 1
 
     if isEven(line):
-        evenNumbersFile.write(str(line) + "\n")
-        evenCount += 1
+        evenFile.write(str(line) + "\n")
+        even += 1
 
     elif isOdd(line):
-        oddNumbersFile.write(str(line) + "\n")
-        oddCount += 1
+        oddFile.write(str(line) + "\n")
+        odd += 1
 
     if isPrime(line):
-        primeNumbersFiles.write(str(line) + "\n")
-        primeCount += 1
+        primeFile.write(str(line) + "\n")
+        prime += 1
+
+print(even,"even numbers")
+print(odd,"odd numbers")
+print(prime,"prime numbers")
+print(num2,"number read")
 
 inputFile.close()        
-evenNumbersFile.close()
-oddNumbersFile.close()
-primeNumbersFiles.close()
-
-print(evenCount,"even numbers")
-print(oddCount,"odd numbers")
-print(primeCount,"prime numbers")
-print(numCount,"number read")
+evenFile.close()
+oddFile.close()
+primeFile.close()
