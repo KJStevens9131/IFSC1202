@@ -1,61 +1,127 @@
-# Returns a properly cased string s y uppercasing the First
-# character and lowercasing the rest of the string
+#ProperCase(s)
+
+#Returns a properly cases string s by uppercasing the first character and lowercasing the rest of the string.
+
+#Hint: use upper() and lower() methods
+
 def ProperCase(s):
-# uppercasing fist letter and other in lowercase
-    return s[0].upper()+s[1:].lower()
 
-# Returns a string with the carraige return ("\n") removed from string s
+    if len(s)==0:
+
+        return ""
+
+    elif len(s)==1:
+
+        return s[0].upper()
+
+        return s[0].upper()+s[1:].lower()
+
+#RemoveCR(s)
+
+#Returns a string with the carriage return ("\n") removed from string s
+
+#Hint: use replace() method
+
 def RemoveCR(s):
-# replacing all "\n" with empty string
-    s.replace("\n",'')
-    return s
 
-# Returns a string with the leading and trailing spaces removed from
-# string s
+    return s.replace('\n', '')
+
+#Trim(s)
+
+#Returns a string with the leading and trailing spaces removed from string s.
+
+#Hint: use strip() methoddef Trim(s):
+
 def Trim(s):
+
     return s.strip()
 
-# Returns the first name of string s
+#FirstName(s)
+
+#Returns the first name of string s
+
+#Hint: Find the first space in string s using the find() method
+
+# Create a substring from the beginning of string s up to the first space
+
+# Call the ProperCase function
+
 def FirstName(s):
-    index = s.find(' ') # find first index of any space
-    substring = s[:index] #creating a substring upto that space.
-    return ProperCase(substring) #returning substring with Proper Case.
 
-# Returns the last name of string s
+    ind = s.find(' ')
+
+    return ProperCase(s[0:ind])
+
+#LastName(s)
+
+#Returns the last name of string s
+
+#Hint: Find the last space in string s using the rfind() method
+
+# Create a substring from the last space to the ending of sring s
+
+# Call the ProperCase function
+
 def LastName(s):
-    index = s.rfind(' ') #find the last space in string s.
-    substring = s[index+1:] # creating a substring from last space to the end.
-    return ProperCase(substring) #return substring with Proper Case
 
-# Returns the middle name from string s
+    ind = s.rfind(' ')
+
+    return ProperCase(Trim(s[ind+1:]))
+
+#MiddleName(s)
+
+#Returns the middlename from string s
+
+#Hint: Find the first space in string s using the find() method
+
+# Find the last space in string s using the rfind() method
+
+# Create a substing from the first space to the last space of string s
+
+# Call the Trim function
+
+# Call the ProperCase function
+
+# If the length of the middle name is one, then it is an initial without a period. Append a period.
+
 def MiddleName(s):
-    index1 = s.find(' ') #find the first space in string s.
-    index2 = s.rfind(' ') #find the last space in string s.
-    if index1 == index2: # if both index are same means no MiddleName
-        return '' # return empty string
-# if both index are not same
-    s1 = Trim(s[index1:index2]) #create a substring and remove any extra spaces
-    s1 = ProperCase(s1) # properly cases the string s using ProperCase()
-    if(len(s1)==1): #if length of the middleName is 1 means it is a initial
-        s1=s1+'.' #append a period at the end
-    return s1 #return middleName
 
-#read filename from user as input
-filename = input("Enter file name: ")
-filename = filename+'.txt' #append .txt to filename
-# printing heading
+    firstInd = s.find(' ')
+
+    lastInd = s.rfind(' ')
+
+    st = s[firstInd:lastInd]
+
+    st = Trim(st)
+
+    st = ProperCase(st)
+
+    if len(st)==1:
+
+        st += '.'
+
+    return st
+
+# Print Headings
+
 print("{:10s} {:10s} {:10s}".format("First","Middle","Last"))
+
 print("{:10s} {:10s} {:10s}".format("-"*10,"-"*10,"-"*10))
-# open the names.txt file for reading
-with open(filename) as f:
-#read whole file at once line by line and returns a list of all lines
-    lines = f.readlines()
-    for line in lines: #for each line in lines list
-        line = Trim(line) #removes leading and trailing spaces
-        line = RemoveCR(line) #removes carraige return ("\n") from line
-    if line!='': #if line is not empty an empty string
-        fn = FirstName(line) #get FirstName from line
-        ln = LastName(line) # get LastName from line
-        mn = MiddleName(line) #get MiddleName from line
-# printing FirstName,MiddleName and LastName sequentially
-    print("{:10s} {:10s} {:10s}".format(fn,mn,ln))
+
+# Open the names.txt file for reading
+
+fp = open('07.11 Names.txt', 'r')
+
+for line in fp.readlines():
+
+    line = Trim(RemoveCR(line))
+
+    fname = FirstName(line)
+
+    lname = LastName(line)
+
+    mname = MiddleName(line)
+
+    print("{:10s} {:10s} {:10s}".format(fname,mname,lname))
+
+fp.close()
