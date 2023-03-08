@@ -1,4 +1,2 @@
-s=input("enter the string\n")
-
-#replacing the string
+s = input("enter the string\n")
 print(s.replace("1","one"))
