@@ -1,6 +1,6 @@
-a=[int(s) for s in input().split()]
-elements=0
+a = [int(j) for j in input("Enter Values Seperated by Spaces: ").split()]
+b = 0
 for i in range(1,len(a)-1):
     if a[i - 1] < a[i] > a[i + 1]:
-        elements += 1
-print("Output=",elements)
+        b += 1
+print(b)

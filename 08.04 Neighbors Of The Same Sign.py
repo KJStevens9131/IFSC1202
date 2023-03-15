@@ -1,9 +1,9 @@
-c=input("enter values seprated by space =")
-l1=c.split()
-l1=[int(i) for i in l1]
-n=len(l1)
-for i in range(n-1):
-    if l1[i]>0 and l1[i+1]>0:
-        print(l1[i],l1[i+1])
-    elif l1[i]<0 and l1[i+1]<0:
-        print(l1[i],l1[i+1])
+a = input("Enter Values Seperated by Spaces: ")
+b = a.split()
+b = [int(i) for i in b]
+c = len(b)
+for i in range(c-1):
+    if b[i] > 0 and b[i+1] > 0:
+        print(b[i],b[i+1])
+    elif b[i] < 0 and b[i+1] < 0:
+        print(b[i],b[i+1])
