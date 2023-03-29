@@ -1,17 +1,17 @@
 str = input("Enter Values Seperated by Spaces: ")
 nums = (list(str.split(" ")))
-nums = [int(nums[x]) for x in range(len(nums))]
+nums = [int(nums[k]) for k in range(len(nums))]
 n = len(nums)
-min_index = 0
-max_index = 0
-for x in range(n):
-    if nums[x]<nums[min_index]:
-        min_index = x
-    if nums[x]>nums[max_index]:
-        max_index = x
+minn = 0
+maxx = 0
+for i in range(n):
+    if nums[i]<nums[minn]:
+        minn = i
+    if nums[i]>nums[maxx]:
+        maxx = i
 
-nums[min_index], nums[max_index] = nums[max_index], nums[min_index]
+nums[minn], nums[maxx] = nums[maxx], nums[minn]
 
 print("Swapped minimum and maximum:",end=" ")
-for i in range(n):
-    print(nums[i],end=" ")
+for j in range(n):
+    print(nums[j],end=" ")
