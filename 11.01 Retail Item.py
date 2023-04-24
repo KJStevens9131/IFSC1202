@@ -1,31 +1,49 @@
 class RetailItem:
-  def __init__(self, Description, UnitOnHand,Price):
-    self.Description = Description
-    self.UnitOnHand = UnitOnHand
-    self.Price = Price
 
-  def InventoryValue(self): 
-        return (self.UnitOnHand * self.Price)
 
-#open file
-f = open('11.01 Inventory.txt')
 
-#create a list to hold objects of RetailItem
-list = []
+    def __init__(self, desc='', units=0, price=0.0):
 
-#read data from txt and store it 
-for i in f:
-  line = i.replace('\n','')
-  data = line.split(', ')
-  
-  list.append(RetailItem(data[0],int(data[1]),float(data[2])))
+        self.description = desc
 
-#print header
-print("{:>11} {:>17} {:>17} {:>17}".format("Description","Unit On Hand","Price","Inventory Value"))
+        self.unitsOnHand = units
 
-#print data
-for obj in list:
-  print("{:>11} {:>17} {:>17} {:>17}".format(obj.Description,obj.UnitOnHand,obj.Price,'%.2f'%obj.InventoryValue()))
+        self.price = price
 
-#close file
-f.close()
+
+
+    def InventoryValue(self):
+
+        return self.unitsOnHand * self.price
+
+
+
+
+
+def main():
+
+    file = '11.01 Inventory.txt'
+
+    items=[]
+
+    file_in = open(file, 'r')
+
+    for line in file_in:
+
+        data = line.strip().split(',')
+
+        name, units, price = data[0].strip(), int(data[1].strip()), float(data[2].strip())
+
+        retail_item = RetailItem(name, units, price)
+
+        items.append(retail_item)
+
+    file_in.close()
+
+    print('{:>12}{:>15}{:>15}{:>25}'.format('Description','Units On Hand','Price','Inventory Value'))
+
+    for item in items:
+
+        print(f'{item.description:>12}{item.unitsOnHand:>15}{item.price:>15.2f}{item.InventoryValue():>25.2f}')
+
+main()

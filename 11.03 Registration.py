@@ -1,94 +1,60 @@
-#import pandas as pd
-
+#some pieces are missing because I used the panda elements on a different program 
+# but I cannont find them in gitpod so i had to change the code 
+print("{:15s}{:15s}{:12s}{:16s}{:13s}{:10s}{:10s}".format("First Name", "Last Name", "T-Number", "Course","Name", "Room","Meeting Times"))
+RegFile = "11.03 Registration.txt"
+studentFile = "11.03 Students.txt"
+j = open(RegFile)
+k = open(studentFile)
 
 class Student:
-
-    def __init__(self, first_name, last_name, t_number):
-        self.first_name = first_name
-        self.last_name = last_name
-        self.t_number = t_number
-        self.course_list = []
-
+    def __init__(self, FirstName, LastName, TNumber):
+        self.FirstName = FirstName
+        self.LastName = LastName
+        self.TNumber = TNumber
+        self.CourseList = []
 
 class StudentList:
-
     def __init__(self):
-        self.student_list = []
+        self.SList = []
 
-    def add_student(self, first_name, last_name, t_number):
-        student = Student(first_name, last_name, t_number)
-        self.student_list.append(student)
+    def add_student(self, FirstName, LastName, TNumber):
+        student = Student(FirstName, LastName, TNumber)
+        self.SList.append(student)
 
     def find_student(self, student_to_find) -> int:
-        for index, student in enumerate(self.student_list):
-            if student.t_number == student_to_find:
+        for index, student in enumerate(self.SList):
+            if student.TNumber == student_to_find:
                 return index
-        return -1  # can be any default value, but -1 reminds me of the default search function
+        return -1 
 
-    def print_student_list(self):
-        # this statement gets all the variables associated with every
-        # student object and parses it to a pandas data frame
-        df = pd.DataFrame([vars(f) for f in self.student_list])
-        print(df.to_string(index=False))  # make use of the pandas library to do pretty printing
+    def print_studentList(self):
+        data = DataFrame([vars(f) for f in self.SList])
 
-    def add_student_from_file(self, file_name):
-        # read_csv function obtains the data (in csv format) and makes it so it
-        # can be used as a convenient python object
-        df = pd.read_csv(file_name, names=["first_name", "last_name", "t_number"])
-        # iterating over a pandas data frame is not an efficient way
-        # check out vectorization
-        for index, row in df.iterrows():
-            self.add_student(row['first_name'], row['last_name'], row['t_number'])
+
+    def add_student_from_file(self, file_Name):
+        data = read_csv(file_Name, Names=["FirstName", "LastName", "TNumber"])
 
 
 class Course:
-    def __init__(self, department, number, name, room, meeting_times):
-        self.department = department
-        self.number = number
-        self.name = name
-        self.room = room
-        self.meeting_times = meeting_times
+    def __init__(self, Department, Number, Name, Room, MeetingTimes):
+        self.Department = Department
+        self.Number = Number
+        self.Name = Name
+        self.Room = Room
+        self.MeetingTimes = MeetingTimes
 
 
 class CourseList:
     def __init__(self):
-        self.course_list = []
+        self.CourseList = []
 
-    def add_course(self, department, number, name, room, meeting_times):
-        self.course_list.append(Course(department, number, name, room, meeting_times))
+    def add_course(self, Department, Number, Name, Room, MeetingTimes):
+        self.CourseList.append(Course(Department, Number, Name, Room, MeetingTimes))
 
-    def find_course(self, department_to_find, number_to_find) -> int:
-        for index, course in enumerate(self.course_list):
-            if course.department == department_to_find and course.number == number_to_find:
+    def find_course(self, depart, num) -> int:
+        for index, course in enumerate(self.CourseList):
+            if course == depart and Number == num:
                 return index
         return -1
 
-    def add_course_from_file(self, file_name):
-        df = pd.read_csv(file_name, names=["department", "number", "name", "room", "meeting_times"])
-        # iterating over a pandas data frame is not an efficient way
-        # check out vectorization
-        for index, row in df.iterrows():
-            self.add_course(row["department"], row["number"], row["name"], row["room"], row["meeting_times"])
-
-
-def main():
-    course_list = CourseList()
-    course_list.add_course_from_file('11.03 Courses.txt')
-
-    student_list = StudentList()
-    student_list.add_student_from_file('11.03 Students.txt')
-
-    # pandas helps us to obtain data with ease from the .txt file
-    df = pd.read_csv('11.03 Registration.txt', names=["t_number", "department", "number"])
-    for index, row in df.iterrows():
-        t_number, department, number = row['t_number'], row['department'], row['number']
-        course_index = course_list.find_course(department, number)
-        student_index = student_list.find_student(t_number)
-        course = course_list.course_list[course_index]
-        student_list.student_list[student_index].course_list.append(course)
-
-    student_list.print_student_list()
-
-
-if __name__ == '__main__':
-    main()
+    #def add_course_from_file(self, file_Name):

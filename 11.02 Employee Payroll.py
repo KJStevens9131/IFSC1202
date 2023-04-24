@@ -1,47 +1,45 @@
-from typing import List
-
+#prints the name for each column and opens/names the text files
+print("{:15s}{:15s}{:12s}{:16s}{:13s}{:10s}".format("First Name", "Last Name", "ID Number", "Hours Worked","Hourly Wage", "Weekly Pay"))
+employeesFile = "11.02 Employees.txt"
+timeFile = "11.02 Hours.txt"
+j = open(employeesFile)
+emp = []
+#start of clas and operations
 class Employee:
-    def __init__(self, firstname, lastname, idnumber, wage, hoursworked = 0):
-        self.firstname = firstname
-        self.lastname = lastname
-        self.idnumber = int(idnumber)
-        self.hoursworked = float(hoursworked)
-        self.wage = float(wage)
+    def __init__(self, FirstName, LastName, IdNumber, Wage, HoursWorked = 0):
+        self.FirstName = FirstName
+        self.LastName = LastName
+        self.IdNumber = int(IdNumber)
+        self.HoursWorked = float(HoursWorked)
+        self.Wage = float(Wage)
+
     def WeeklyPay(self):
-        if self.hoursworked > 40:
-            return self.wage * 40 + self.wage * 1.5 * (self.hoursworked - 40)
-        return self.hoursworked * self.wage
+        if self.HoursWorked > 40:
+            return self.Wage*40+self.Wage*1.5*(self.HoursWorked-40)
+        return self.HoursWorked*self.Wage
 
-
-def find_employee(employees : List[Employee], empid):
-    for i in range(len(employees)):
-        if empid == employees[i].idnumber:
+def find_employee(emp : Employee, idnum):
+    for i in range(len(emp)):
+        if idnum == emp[i].IdNumber:
             return i
     return -1
 
-if __name__ == '__main__':
-    emp_file = '11.02 Employees.txt'
-    hours_file = '11.02 Hours.txt'
-    fh = open(emp_file)
-    employees = []
-    for line in fh:
-        line = line.strip('\n').split(',')
-        firstname, lastname, idnumber, wage = line[0], line[1], \
-                                            int(line[2]), float(line[3])
-        employee = Employee(firstname, lastname, idnumber, wage)
-        employees.append(employee)
-    fh = open(hours_file)
-    for line in fh:
-        line = line.strip('\n').split(',')
-        idnumber, hours = int(line[0]), float(line[1])
-        index = find_employee(employees, idnumber)
-        if index != -1:
-            employees[index].hoursworked = hours
-    print('{0:13s}{1:13s}{2:10s}  {3:14s}  {4:14s}{5:14s}'.format(
-        'First Name', 'Last Name', 'ID Number', 'Hours Worked',
-        'Hourly Wage', 'Weekly Pay'
-    ))
-    for emp in employees:
-        print('{0:13s}{1:13s}{2:10d}{3:14.2f}{4:14.2f}{5:14.2f}'.format(
-           emp.firstname, emp.lastname, emp.idnumber,
-            emp.hoursworked, emp.wage, emp.WeeklyPay()))
+for i in j:
+    i = i.strip("\n").split(",")
+    FirstName, LastName, IdNumber, Wage = i[0], i[1], int(i[2]), float(i[3])
+    emp2 = Employee(FirstName, LastName, IdNumber, Wage)
+    emp.append(emp2)
+
+#opens hours file and puts into J
+j = open(timeFile)
+
+for i in j:
+    i = i.split(",")
+    IdNumber, hours = int(i[0]), float(i[1])
+    index = find_employee(emp, IdNumber)
+    if index != -1:
+        emp[index].HoursWorked = hours
+
+#outputs the final sections of data
+for emp in emp:
+    print("{:13s}  {:12s}{:10d}{:14}{:14}{:14.2f}".format(emp.FirstName, emp.LastName, emp.IdNumber,emp.HoursWorked, emp.Wage, emp.WeeklyPay()))
