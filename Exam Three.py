@@ -3,7 +3,7 @@ import math
 print("{:20s}{:12s}{:12s}{:10s}{:14s}{:10s}{:12s}{:12s}{:12s}".format("Type", "Side 1", "Side 2", "Side 3","Perimeter", "Area","Angle 1","Angle 2","Angle 3"))
 j = open("Exam Three Triangle.txt", "r")
 items = []
-pi = 3.1415926535
+pi = 3.14159
 
 class Triangle:
     def __init__(self, s1, s2, s3):
