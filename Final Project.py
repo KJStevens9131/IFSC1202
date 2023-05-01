@@ -1,84 +1,77 @@
+#Most things here don't need notes to the name being the action that it does
+#Prints the Labels for the data
+print("{:9s}{:8s}{:8s}{:8s}{:8s}{:8s}{:12s}".format("\tInitial", "Price", "Initial", "Sold","Sold", "Lost","Lost"))
+print("{:8s}{:8s}{:8s}{:8s}{:8s}{:8s}{:8s}{:12s}".format("Product", "Count", "PerItem", "Value","Value", "Count","Count","Value"))
+
+#Class for set up the first set of data points
 class VendingItem(object):
-    def __init__(self,name,initial_count,cost_per_item):
-        self.name=name
-        self.initial_count=initial_count
-        self.cost_per_item=cost_per_item
-        self.sold_count=0
+    def __init__(self, Name, InitialCount, CostPerItem):
+        self.Name = Name
+        self.InitialCount = InitialCount
+        self.CostPerItem = CostPerItem
+        self.SoldCount = 0
+        self.LostCount = 0
+    def InitialValue(self):
+        return self.InitialCount * self.CostPerItem
+    def SoldValue(self):
+        return self.SoldCount * self.CostPerItem
+    def LostValue(self):
+        return self.LostCount * self.CostPerItem
 
+#Class used to set up the remaining data points
+class Vending:
+    def __init__(self, Name):
+        self.Name = Name
+        self.Vendinglist = []
+        self.VendingTotalInitialValue = 0
+        self.VendingTotalInitialCount = 0
+        self.VendingTotalSoldValue = 0
+        self.VendingTotalSoldCount = 0
+        self.VendingTotalLostValue = 0
+        self.VendingTotalLostCount = 0
 
-    def initial_value(self):
-        initial_val=self.initial_count*self.cost_per_item
-        return initial_val
+    def load_vending_items_from_file(self,file):
+        z = open(file,"r")
+        for x in z:
+            list1 = x.split()
+            vend = VendingItem(list1[0],int(list1[1]),float(list1[2]))
+            self.VendingTotalInitialValue += vend.InitialValue()
+            self.VendingTotalInitialCount += vend.InitialCount
+            self.Vendinglist.insert(len(self.Vendinglist),vend)
 
-    def sold_value(self):
-        sold_val=self.sold_count*self.cost_per_item
-        return sold_val
-
-
-class Vending(object):
-
-    def __init__(self,file_name):
-#varibles to store data
-        self.vending_list=[]
-        self.vending_total_sold_count=0
-        self.vending_total_sold_value=0
-        self.vending_total_initial_value=0
-        self.vending_total_initial_count=0
-
-#read from file and update list and variables
-        with open(file_name,"r") as file:
-            for line in file:
-                item=line.split()
-                vending_item=VendingItem(item[0],int(item[1]),float(item[2]))
-                self.vending_list.append(vending_item)
-#iterate throught the list
-
-        for item in self.vending_list:
-            self.vending_total_initial_value=self.vending_total_initial_value+item.initial_value()
-            self.vending_total_initial_count=self.vending_total_initial_count+item.initial_count
-
-
+#eulav is value backwards to make it stand out more
+#Prints out the value under the titles
     def print_vending(self):
-#print all information
-        print("items present are: ")
-#iterate throught the list
+        for eulav in self.Vendinglist:
+            print("{:}\t{:}{:10.2f}{:9.2f}\t{:}{:11.2f}\t{:}\t{:.2f}".format(eulav.Name,eulav.InitialCount,eulav.CostPerItem,eulav.InitialValue(),eulav.SoldCount,eulav.SoldValue(),eulav.LostCount,eulav.LostValue()))
+        print("")
+        print("{:}\t{:}{:10}{:9.2f}\t{:}{:11.2f}\t{:}\t{:.2f}".format("Total",self.VendingTotalInitialCount,"",self.VendingTotalInitialValue,self.VendingTotalSoldCount,self.VendingTotalSoldValue,self.VendingTotalLostCount,self.VendingTotalLostValue))
 
-        for product in self.vending_list:
-            print(("%s %d %f %d %f %f")%(product.name,product.initial_count,product.cost_per_item,product.sold_count,product.initial_value(),product.sold_value())) 
-            print(("vending total inital count = %d")%(self.vending_total_initial_count))
-            print(("vending total initial value = %f")%(self.vending_total_initial_value))
-            print(("vending total sold count =%d")%(self.vending_total_sold_count))
-            print(("vending total sold value = %f")%(self.vending_total_sold_value))
-            print()
+    def find_product(self,producttofind):
+        list2 = -1
+        for eulav in self.Vendinglist:
+            list2 = list2 + 1
+            if eulav.Name == producttofind:
+                return list2
+            return list2
 
+    def update_vending(self,productname):
+        list2 = self.find_product(productname)
+        if list2 != -1:
+            eulav = self.Vendinglist[list2]
+            if eulav.SoldCount < eulav.InitialCount:
+                eulav.SoldCount = eulav.SoldCount + 1
+                self.VendingTotalSoldValue = self.VendingTotalSoldValue + eulav.CostPerItem
+                self.VendingTotalSoldCount = self.VendingTotalSoldCount + 1
+            else:
+                eulav.LostCount = eulav.LostCount + 1
+                self.VendingTotalLostValue = self.VendingTotalLostValue + eulav.CostPerItem
+                self.VendingTotalLostCount = self.VendingTotalLostCount + 1
 
-    def update_vending(self,name):
-#iterate throught the list
-        for i in range(0,len(self.vending_list)-1):
-            product=self.vending_list[i]
-
-            if(product.name==name):
-                if(product.sold_count<product.initial_count):
-                    product.sold_count=product.sold_count+1
-                    self.vending_total_sold_count=self.vending_total_sold_count+1
-                    self.vending_total_sold_value=self.vending_total_sold_value+product.sold_value()
-                    return
-                else:
-                    print("product sold out")
-                return
-
-
-def main():
-    vending =Vending("Final Project Vending.txt")
-    vending.print_vending()
-#get input as product name and then increment sold count of product by 1
-    while(True):
-        name=input("enter product name or type (exit) to exit :")
-        if(name=="exit"):
-            print("bye!!")
-            break
-        vending.update_vending(name)
-        vending.print_vending()
-
-
-main()
+#Used to actually call for the data
+list3 = Vending("")
+list3.load_vending_items_from_file("Final Project Vending.txt")
+z = open("Final Project Sales.txt","r")
+for x in z:
+    list3.update_vending(x)
+list3.print_vending()
